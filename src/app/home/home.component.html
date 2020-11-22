@@ -1,0 +1,113 @@
+<div class="mainContainer" style="margin-bottom: 20px">
+  <div class="lineChartMain">
+    <div fxLayout="row">
+      <div class="titleLineCharMain"> Sprzedaż polis w ciągu roku </div>
+    </div>
+
+    <div style="height: 250px">
+      <canvas id="lineSaleChart"></canvas>
+    </div>
+  </div>
+
+  <div fxLayout.lt-lg="column" fxLayout.gt-md="row">
+
+    <div fxFlex.gt-sm="70%" fxFlex.lt-lg="100%" style="margin-left: 25px">
+        <div class="title" style="margin-bottom: 5px">
+          Twoje statystyki
+        </div>
+        <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+          <div fxFlex.gt-sm="40%" fxFlex.lt-md="100%" class="mainChart">
+            <div class="component-chart">
+              <div class="h2Chart">
+                Zestawienie rodzaju polis
+              </div>
+              <div class="chart">
+                <canvas id="policiesByKind"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div fxFlex.gt-sm="25%" fxFlex.lt-md="100%" class="mainChart">
+            <div class="component-chart">
+              <div class="h2Chart">
+                Dodane polisy
+              </div>
+              <div class="h2Chart" style="font-size: 45px; font-weight: bold; color: black; margin-top: -5px">
+                {{userAllPolicies}} polis
+              </div>
+              <div style="color: gray; margin-left: 20px">
+                Ostatnie dwa tygodnie
+              </div>
+              <div class="chart">
+                <canvas id="addedPolicies"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div fxFlex.gt-sm="25%" fxFlex.lt-md="100%" class="mainChart">
+            <div class="component-chart">
+              <div class="h2Chart">
+                Dodani klienci
+              </div>
+              <div class="h2Chart" style="font-size: 45px; font-weight: bold; color: black; margin-top: -5px">
+                {{customersAll}} klietów
+              </div>
+              <div style="color: gray; margin-left: 20px">
+                Ostatnie dwa tygodnie
+              </div>
+              <div class="chart">
+                <canvas id="customersLine"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <div fxFlex="70%">
+              <div class="title" style="margin-bottom: 15px">Kończące się polisy</div>
+              <div class ="tableContainer">
+                <table mat-table [dataSource]="expirePolicies" matSort >
+                  <ng-container matColumnDef="policyNumber">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer polisy </th>
+                    <td mat-cell *matCellDef="let element"> {{element.policyNumber}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="daysToEnd">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Dni do zakończenia </th>
+                    <td mat-cell *matCellDef="let element"> {{element.daysToEnd}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="columnsToDisplay" ></tr>
+                  <tr mat-row *matRowDef="let row; columns: columnsToDisplay" class="mat-row"></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+    <div fxFlex.gt-sm="30%" fxFlex.lt-md="100%" style="margin-left: 25px">
+      <div class="title" style="margin-right: 20px">
+        Statystyki firmy
+      </div>
+      <div class="divCharts">
+        <div class="component-chart" >
+          <div class="h2Chart">
+            Zestawienie rodzaju polis
+          </div>
+          <div class="chart">
+            <canvas id="allPoliciesByKind"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

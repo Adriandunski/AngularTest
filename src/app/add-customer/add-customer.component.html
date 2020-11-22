@@ -1,0 +1,275 @@
+<mat-tab-group animationDuration="250ms">
+  <mat-tab label="Dodaj klienta prywatnego">
+    <form [formGroup]="customerForm" (ngSubmit)="addCustomer()" class="form">
+      <mat-accordion multi>
+        <mat-expansion-panel>
+
+          <mat-expansion-panel-header>
+            <mat-panel-title> Dane osobowe</mat-panel-title>
+            <mat-panel-description> Wprowadź poprawnie dane osobowe</mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <mat-form-field>
+            <mat-label>Imię</mat-label>
+            <input matInput type="text" placeholder="Marcin" formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Drugie imię</mat-label>
+            <input matInput type="text" placeholder="Piotr" formControlName="secondName">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Nazwisko</mat-label>
+            <input matInput placeholder="Chybalski" formControlName="lastname">
+            <button mat-icon-button *ngIf="customerForm.controls['lastname'].value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="customerForm.controls['lastname'].setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Pesel</mat-label>
+            <input matInput formControlName="pesel">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Data urodzenia</mat-label>
+            <input matInput [matDatepicker]="birth" formControlName="dateOfBirth">
+            <button type="button" mat-icon-button matSuffix>
+              <mat-icon (click)="birth.open()">today</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Płeć</mat-label>
+            <mat-icon matSuffix>wc</mat-icon>
+            <mat-select formControlName="gender">
+              <mat-option value="M">
+                Mężczyzna
+              </mat-option>
+              <mat-option value="K">
+                Kobieta
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Obywatelstwo</mat-label>
+            <input type="text" matInput formControlName="citizenship">
+          </mat-form-field>
+
+          <mat-datepicker #birth></mat-datepicker>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Dane adresowe</mat-panel-title>
+            <mat-panel-description> Wprowadź poprawnie dane adresowe</mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div formGroupName="adress">
+            <mat-form-field>
+              <mat-label>Państwo</mat-label>
+              <mat-icon matSuffix>emoji_flags</mat-icon>
+              <mat-select formControlName="state">
+                <mat-option *ngFor="let c of countries$ | async" [value]="c['name_pl']">
+                  {{c['name_pl']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Miasto</mat-label>
+              <mat-icon matSuffix>location_city</mat-icon>
+              <input matInput formControlName="city">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Ulica</mat-label>
+              <input matInput formControlName="street">
+              <mat-icon matSuffix>add_road</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Nr budynku</mat-label>
+              <input matInput formControlName="buildingNumber">
+              <mat-icon matSuffix>home</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Nr lokalu</mat-label>
+              <input matInput formControlName="localNumber">
+              <mat-icon matSuffix>sensor_door</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Kod pocztowy</mat-label>
+              <input matInput formControlName="postcode" placeholder="xx-xxx">
+              <mat-icon matSuffix>vpn_key</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <mat-slide-toggle formControlName="corespondActive">Adress korespondencyjny inny?</mat-slide-toggle>
+
+          <div [formGroup]="corespondAdress" [hidden]="!customerForm.controls['corespondActive'].value">
+            <mat-form-field>
+              <mat-label>Państwo</mat-label>
+              <mat-icon matSuffix>emoji_flags</mat-icon>
+              <mat-select formControlName="state">
+                <mat-option *ngFor="let c of countries$ | async" [value]="c['name_pl']">
+                  {{c['name_pl']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Miasto</mat-label>
+              <mat-icon matSuffix>location_city</mat-icon>
+              <input matInput formControlName="city">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Ulica</mat-label>
+              <input matInput formControlName="street">
+              <mat-icon matSuffix>add_road</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Nr budynku</mat-label>
+              <input matInput formControlName="buildingNumber">
+              <mat-icon matSuffix>home</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Nr lokalu</mat-label>
+              <input matInput formControlName="localNumber">
+              <mat-icon matSuffix>sensor_door</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Kod pocztowy</mat-label>
+              <input matInput formControlName="postcode">
+              <mat-icon matSuffix>vpn_key</mat-icon>
+            </mat-form-field>
+          </div>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Dane kontaktowe</mat-panel-title>
+            <mat-panel-description> Wprowadź poprawnie dane kontaktowe</mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <mat-form-field>
+            <mat-label> Wprowadź email</mat-label>
+            <mat-icon matSuffix>email</mat-icon>
+            <input matInput type="text" placeholder="januszowo@wp.pl" formControlName="email">
+            <mat-error *ngIf="customerForm.controls['email'].invalid"> {{getErrorMessageEmail()}} </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Numer tel</mat-label>
+            <input matInput formControlName="phone">
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+      <div fxLayoutAlign="center center">
+        <button mat-raised-button type="submit" color="warn" class="button_submit"
+                [disabled]="!customerForm.valid || (!corespondAdress.valid && customerForm.controls.corespondActive.value)">
+          Dodaj
+        </button>
+      </div>
+    </form>
+  </mat-tab>
+
+  <mat-tab label="Dodaj frime">
+    <form [formGroup]="companyForm" (ngSubmit)="addCompany()" class="form">
+      <mat-accordion multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Dane Frimy</mat-panel-title>
+            <mat-panel-description> Wprowadź poprawnie dane firmy</mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <mat-form-field>
+            <mat-label>Nazwa frimy</mat-label>
+            <input matInput type="text" formControlName="nameOfCompany">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>NIP</mat-label>
+            <input matInput type="text" formControlName="nip">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Telefon</mat-label>
+            <input matInput type="text" formControlName="phone">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="text" formControlName="email">
+          </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Dane adresowe</mat-panel-title>
+            <mat-panel-description> Wprowadź poprawnie dane adresowe</mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div formGroupName="companydAdress">
+            <mat-form-field>
+              <mat-label>Państwo</mat-label>
+              <mat-icon matSuffix>emoji_flags</mat-icon>
+              <mat-select formControlName="state">
+                <mat-option *ngFor="let c of countries$ | async" [value]="c['name_pl']">
+                  {{c['name_pl']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Miasto</mat-label>
+              <mat-icon matSuffix>location_city</mat-icon>
+              <input matInput formControlName="city">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Ulica</mat-label>
+              <input matInput formControlName="street">
+              <mat-icon matSuffix>add_road</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Nr budynku</mat-label>
+              <input matInput formControlName="buildingNumber">
+              <mat-icon matSuffix>home</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Nr lokalu</mat-label>
+              <input matInput formControlName="localNumber">
+              <mat-icon matSuffix>sensor_door</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Kod pocztowy</mat-label>
+              <input matInput formControlName="postcode">
+              <mat-icon matSuffix>vpn_key</mat-icon>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div fxLayoutAlign="center center">
+        <button mat-raised-button type="submit" color="warn" class="button_submit" [disabled]="!companyForm.valid">
+          Dodaj
+        </button>
+      </div>
+    </form>
+  </mat-tab>
+</mat-tab-group>

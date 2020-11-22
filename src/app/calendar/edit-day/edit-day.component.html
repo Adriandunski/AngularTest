@@ -1,0 +1,48 @@
+<div class="mainContainer">
+  <mat-dialog-content>
+    <div fxLayout="column">
+      <div fxLayoutAlign="center center"><h3>Edytuj zadanie</h3></div>
+      <div style="margin-top: 20px">
+        <form [formGroup]="taskForm">
+          <div fxLayout="column">
+            <mat-form-field>
+              <mat-label>Rodzaj</mat-label>
+              <mat-select formControlName="name">
+                <mat-option value="Spotkanie">Spotkanie</mat-option>
+                <mat-option value="Telefon">Telefon</mat-option>
+                <mat-option value="Inne">Inne</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status">
+                <mat-option value="Spotkanie">Wykonane</mat-option>
+                <mat-option value="Telefon">Niewykonane</mat-option>
+                <mat-option value="Inne">Przeplanowane</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Opis</mat-label>
+              <input matInput formControlName="event" >
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Początek</mat-label>
+              <input matInput [owlDateTime]="start" [owlDateTimeTrigger]="start" readonly (dateTimeInput)="inputStart()" formControlName="start">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Koniec</mat-label>
+              <input matInput [owlDateTime]="end" [owlDateTimeTrigger]="end" readonly (dateTimeInput)="inputEnd()" formControlName="end">
+            </mat-form-field>
+          </div>
+          <owl-date-time [pickerType]="'timer'" #start></owl-date-time>
+          <owl-date-time [pickerType]="'timer'" #end></owl-date-time>
+        </form>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <div fxLayout="column">
+    <button mat-raised-button color="warn" style="margin-bottom: 10px" [mat-dialog-close] = false>Anuluj</button>
+    <button mat-raised-button color="primary" (click)="checkData()" [mat-dialog-close]="taskForm.value" [disabled]="!correct || !taskForm.valid">Dodaj</button>
+  </div>
+</div>

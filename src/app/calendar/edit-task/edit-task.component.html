@@ -1,0 +1,36 @@
+<div>
+  <div fxLayout="row">
+    <div fxLayout="row">
+      <div class="day">{{day.dayOfMonth}}</div>
+      <div class="monthWithYear">{{day.nameMonthOfYear}} {{day.year}}</div>
+    </div>
+    <div fxFlex> </div>
+    <div fxLayout="row">
+      <div style="font-size: 20px; margin-left: 15px; padding-top: 5px">
+        Liczba zadań: {{sizeOfTasks}}
+      </div>
+      <div>
+        <button mat-button style="margin-left: 5px;" (click)="addTask()">
+          <mat-icon>add</mat-icon>
+          Dodaj
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    Zadania:
+    <div *ngFor="let task of tasks" style="margin-bottom: 3px; padding: 7px; border: black; border-style: solid; border-width: 2px" fxLayoutAlign="center center" fxLayout="row">
+      <div>
+        {{task.name}} {{task.place}} {{task.event}} [{{task.startT}} - {{task.endT}}]
+      </div>
+      <div fxFlex></div>
+
+      <div fxLayoutAlign="center center" style="margin-left: 20px">
+        <p>({{task.status}})</p>
+        <button mat-raised-button color="primary" (click)="editTask(task)" style="margin-right: 10px; margin-left: 20px">Edytuj</button>
+        <button mat-raised-button color="warn" (click)="deleteTask(task)">Usuń</button>
+      </div>
+    </div>
+  </div>
+</div>

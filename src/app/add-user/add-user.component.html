@@ -1,0 +1,82 @@
+    <form [formGroup]="userForm" (ngSubmit)="addUser()">
+      <div fxLayoutAlign="center center" fxLayout="column" class="formDiv">
+        <div fxLayout="row" fxLayout.xs="column">
+          <mat-form-field class="mat-form-field">
+            <mat-label>Imię</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field class="mat-form-field">
+            <mat-label>Nazwisko</mat-label>
+            <input matInput formControlName="lastname">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column">
+          <mat-form-field class="mat-form-field">
+            <mat-label>Numer telefonu</mat-label>
+            <input matInput formControlName="phoneNumber">
+          </mat-form-field>
+
+          <mat-form-field class="mat-form-field">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Oddział</mat-label>
+          <mat-icon matSuffix>business</mat-icon>
+
+          <mat-select formControlName="branch" *ngIf="adminAccess else moderatorField">
+            <mat-option>
+              BRAK
+            </mat-option>
+            <mat-option *ngFor="let branch of branchesArray" value="{{branch.nameOfBranch}}">
+              {{branch.nameOfBranch}}
+            </mat-option>
+          </mat-select>
+
+          <ng-template #moderatorField>
+            <mat-select formControlName="branch" [(ngModel)]="selectedBranch">
+              <mat-option value="{{branch}}">
+                {{branch}}
+              </mat-option>
+            </mat-select>
+          </ng-template>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Rola</mat-label>
+          <mat-icon matSuffix>engineering</mat-icon>
+          <mat-select formControlName="role">
+            <mat-option value="admin" [disabled]="!adminAccess">
+              Admin
+            </mat-option>
+            <mat-option value="manager" [disabled]="!adminAccess">
+              Manager
+            </mat-option>
+            <mat-option value="agent">
+              Agent
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field">
+          <mat-label>Login</mat-label>
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <input matInput formControlName="login">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Hasło</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" type="submit" class="buttonSubmit" [disabled]="!userForm.valid">
+          Utwórz
+        </button>
+      </div>
+    </form>

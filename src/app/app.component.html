@@ -1,0 +1,87 @@
+
+<mat-toolbar class="toolbar">
+
+  <div class="toolbar_logo-title-group" fxLayout fxLayoutAlign="center center">
+    <button mat-icon-button [routerLink]="['/']">
+      <mat-icon style="color: black"> policy</mat-icon>
+    </button>
+    <a class="toolbar_title" [routerLink]="['/']" style="color: black"> AgentAssistant </a>
+  </div>
+
+  <div fxFlex></div>
+
+  <div *ngIf="isLoggedIn" fxLayout="row">
+    <button mat-icon-button [mat-menu-trigger-for]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+
+<router-outlet></router-outlet>
+
+
+<mat-menu #menu="matMenu">
+
+  <div>
+        <span fxLayoutAlign="center center" style="color: black; font-size: 20px">
+      <mat-icon matPrefix >person</mat-icon>
+          {{ username }}
+    </span>
+  </div>
+
+  <button mat-menu-item [routerLink]="['customers']">
+    <mat-icon>people</mat-icon>
+    <span>Klienci</span>
+  </button>
+
+  <button mat-menu-item [routerLink]="['policies']">
+    <mat-icon>description</mat-icon>
+    <span>Polisy</span>
+  </button>
+
+  <button mat-menu-item [routerLink]="['calendar']">
+    <mat-icon>calendar_today</mat-icon>
+    <span>Kalendarz</span>
+  </button>
+
+  <button mat-menu-item [routerLink]="['users']" >
+    <mat-icon>psychology</mat-icon>
+    <span>Użytkownicy</span>
+  </button>
+
+  <button mat-menu-item [routerLink]="['branch']" *ngIf="adminAccess">
+    <mat-icon>business</mat-icon>
+    <span>Oddziały</span>
+  </button>
+
+  <button mat-menu-item [routerLink]="['addCustomer']">
+    <mat-icon>person_add</mat-icon>
+    <span>Dodaj klienta</span>
+  </button>
+
+  <button mat-menu-item [routerLink]="['addPolicy']" >
+    <mat-icon>note_add</mat-icon>
+    <span>Dodaj polise</span>
+  </button>
+
+  <button mat-menu-item [routerLink]="['addUser']" *ngIf="adminAccess || managerAccess">
+    <mat-icon>person_add</mat-icon>
+    <span>Dodaj użytkownika</span>
+  </button>
+
+  <button mat-menu-item [routerLink]="['myBranch', login]" *ngIf="managerAccess">
+    <mat-icon>business</mat-icon>
+    <span>Mój oddział</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon>settings</mat-icon>
+    <span>Ustawienia</span>
+  </button>
+
+  <button mat-menu-item *ngIf="isLoggedIn" (click)="logout()">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Wyloguj</span>
+  </button>
+</mat-menu>

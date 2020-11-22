@@ -1,0 +1,84 @@
+<div class="columnx" fxLayout="column">
+  <div class="buttons" fxLayout="column" fxLayoutAlign="center center">
+    <div fxLayout="row">
+      <button (click)="previousMonth()">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+
+      <p class="date_callendar"> {{ date.getMonth() + 1 }} / {{ date.getFullYear() }}</p>
+
+      <button (click)="nextMonth()">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
+
+    <p class="month"> {{nameOfMonth}} </p>
+  </div>
+
+
+  <div class="wrapper_callendar" fxLayout="row">
+    <div fxFlex="25%"></div>
+
+    <div class="mat-grid" fxFlex="50%">
+
+      <mat-grid-list  [cols]="7" [rowHeight]="20" *ngIf="pc">
+        <mat-grid-tile *ngFor="let dayName of dayNames" class="mat-grid-tile-solid">
+          <span *ngIf="dayName !== 'Niedziela'; else weekendErr"> {{ dayName }}</span>
+          <ng-template #weekendErr>
+            <span [ngStyle]="{color: 'red'}"> {{ dayName }}</span>
+          </ng-template>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <div *ngIf="pc; else elseBlock">
+        <mat-grid-list [cols]="7" class="margin2list">
+
+          <mat-grid-tile *ngFor="let space of spaces" ></mat-grid-tile>
+
+          <mat-grid-tile class="mat-grid-tile-solid-tile"
+                         *ngFor="let day of days"
+                         (click)="routerTo(day)"
+                         [ngStyle]="{'background-color': day.tasks.length > 0 ? '#ffe99a' : '#b5ff9a'}">
+
+            <span class="day" *ngIf="day.nameDayOfWeek !== 'Niedziela'; else weekendErr">{{ day.dayOfMonth }}</span>
+
+            <ng-template #weekendErr>
+              <span class="dayErr">{{ day.dayOfMonth }}</span>
+            </ng-template>
+            <div style="padding-top: 70px; font-size: 13px">
+              Liczba wydarzeń: {{day.tasks.length}}
+            </div>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+      </div>
+
+      <ng-template #elseBlock>
+        <mat-grid-list [cols]="1" class="margin2list" [rowHeight]="70">
+          <mat-grid-tile class="mat-grid-tile-solid-tile"
+                         *ngFor="let day of days"
+                         (click)="routerTo(day)"
+                         [ngStyle]="{'background-color': day.tasks.length > 0 ? '#ffe99a' : '#b5ff9a'}">
+
+            <div *ngIf="day.nameDayOfWeek !== 'Niedziela'; else weekendErr">
+              <p class="dayOfWeek">{{day.nameDayOfWeek}}</p>
+              <span class="day">{{ day.dayOfMonth }}</span>
+            </div>
+
+            <ng-template #weekendErr>
+              <p class="dayOfWeekErr">{{day.nameDayOfWeek}}</p>
+              <span class="dayErr">{{ day.dayOfMonth }}</span>
+            </ng-template>
+
+            <div>
+              <span>Liczba wydarzeń: {{day.tasks.length}}</span>
+            </div>
+
+          </mat-grid-tile>
+        </mat-grid-list>
+      </ng-template>
+
+    </div>
+    <div fxFlex="25%"></div>
+  </div>
+</div>
